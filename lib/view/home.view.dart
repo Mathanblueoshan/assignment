@@ -5,6 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_new_app/model/homemodel.dart';
 import 'package:flutter_new_app/view/Details.view.dart';
+import 'package:flutter_new_app/view_model/home.viewmodel.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -24,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    // final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -144,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                     child: const Text("Open Now!"),
                     onPressed: () {
-                     // readJson();
+                      homeViewModel.readJson();
                     },
                   ),
               ],

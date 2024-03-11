@@ -1,29 +1,24 @@
-// import 'dart:convert';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_new_app/model/homemodel.dart';
+class HomeViewModel extends ChangeNotifier{
+ 
 
-// class HomeViewModel{
-
-//     init() {
+    init() {
    
    
      
-//    }
+   }
 
-//    //fetch the content from json
-//   Future<List<Items>> readJson() async {
-//     final String response = await rootBundle.loadString('assets/properties.json');
-//     debugPrint(response);
-//     final data = await json.decode(response);
+   //fetch the content from json
+  Future<void> readJson() async {
+    final String response = await rootBundle.loadString('assets/properties.json');
+    debugPrint(response);
+    final data = await json.decode(response);
+ 
+ debugPrint(data);
 
-    
-
-//     setState(() {
-
-      
-    
-//     });
-//   }
-// }
+ notifyListeners();
+  }
+}
