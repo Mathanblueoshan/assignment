@@ -107,7 +107,7 @@ class _DetailPageState extends State<DetailPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                '${_detailsViewModel.details["askingPrice"].toString()} SEK',
+                                '${_detailsViewModel.details["askingPrice"]} SEK',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0),

@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
             return Text('Error: ${snapshot.error}');
           } else {
             return Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(20.0),
               child: ListView.builder(
                 itemCount: _homeViewModel.modelitems.length,
                 itemBuilder: (context, index) {
