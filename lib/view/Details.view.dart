@@ -10,8 +10,8 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  final DetailsViewModel _detailsViewModel =
-      DetailsViewModel(); //access the Detailsviewmodel
+  
+  final DetailsViewModel _detailsViewModel = DetailsViewModel(); //access the Detailsviewmodel
 
   @override
   void initState() {
