@@ -79,8 +79,9 @@ class _HomePageState extends State<HomePage> {
                   return SizedBox(
                       child: Column(
                         children: [
-                          item.type != "Area" ? const Text("") : const Align(
+                          item.type != "Area" ? const Text("") :const Align(
                              alignment: Alignment.centerLeft,
+                            
                             child:  Text("Area" ,style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20.0),)),const SizedBox(height: 8.0,) ,
                             
                             item.type == "HighlightedProperty" ?  GestureDetector(
@@ -144,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                           const SizedBox(height: 5.0,),
+                           const SizedBox(height: 20.0,),
                         ],
                       ),
                     );
