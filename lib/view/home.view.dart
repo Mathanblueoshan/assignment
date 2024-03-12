@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_new_app/model/homemodel.dart';
 import 'package:flutter_new_app/view/Details.view.dart';
 import 'package:flutter_new_app/view_model/home.viewmodel.dart';
-import 'package:provider/provider.dart';
+
 
 
 
@@ -19,14 +19,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
- List<Items>  modelitems = [];
+ final HomeViewModel _homeViewModel = HomeViewModel();//access the view model
 
+ @override
+  void initState() {
+    super.initState();
+    _homeViewModel.readJson();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-
-    final homeViewModel = Provider.of<HomeViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,100 +61,101 @@ class _HomePageState extends State<HomePage> {
       ),
       //______________________________________________________LISTVIEW____________________________________________________________________
 
-      body:modelitems.isNotEmpty
-          ? Padding(
-            padding: const EdgeInsets.all(20.0),
-            
+      body:FutureBuilder(
+        future: _homeViewModel.readJson(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
               child: ListView.builder(
-                itemCount:modelitems.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemCount: _homeViewModel.modelitems.length,
+                itemBuilder: (context, index) {
+                  Items item = _homeViewModel.modelitems[index];
+              
                   return SizedBox(
-                    child: Column(
-                      children: [
-                        modelitems[index].type!= "HighlightedProperty" ? const Text("") : const Align(
-                           alignment: Alignment.centerLeft,
-                          child:  Text("Area" ,style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20.0),)),const SizedBox(height: 8.0,) ,
-                        modelitems[index] == 0 ?  GestureDetector(
-                          onTap: (){
-                         
-                             Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const DetailPage())));
-                          },
-                          child: Container(
-                            height: 250.0,
-                            decoration: BoxDecoration(border: Border.all(color: Colors.yellow, width: 5,)),
-                            child: Image.network(modelitems[index].image.toString(),width: double.maxFinite,fit:BoxFit.cover, ),
-                          ),
-                        )
-
-                       : SizedBox(
-                          height: 150.0,
-                          
-                          child: Image.network(modelitems[index].image.toString(),fit: BoxFit.cover, width: double.maxFinite,),
-                        ),
-                        const SizedBox(height: 20.0,),
-                        Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                modelitems[index].streetAddress ??  modelitems[index].area.toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0),
-                              ),
+                      child: Column(
+                        children: [
+                          item.type != "Area" ? const Text("") : const Align(
+                             alignment: Alignment.centerLeft,
+                            child:  Text("Area" ,style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 20.0),)),const SizedBox(height: 8.0,) ,
+                            
+                            item.type == "HighlightedProperty" ?  GestureDetector(
+                            onTap: (){
+                           
+                               Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const DetailPage())));
+                            },
+                            child: Container(
+                              height: 250.0,
+                              decoration: BoxDecoration(border: Border.all(color: Colors.yellow, width: 5,)),
+                              child: Image.network(item.image.toString(),width: double.maxFinite,fit:BoxFit.cover, ),
                             ),
-                            const SizedBox(height: 8.0,),
-                            Align(
+                          )
+                  
+                         : SizedBox(
+                            height: 150.0,
+                            
+                            child: Image.network(item.image.toString(),fit: BoxFit.cover, width: double.maxFinite,),
+                          ),
+                  
+                  
+                          const SizedBox(height: 20.0,),
+                          Column(
+                            children: [
+                              Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  modelitems[index].area != null ? modelitems[index].municipality != null ?  '${modelitems[index].area},${modelitems[index].municipality}' : "Rating:${modelitems[index].ratingFormatted}"  : "",
-                                  style: const TextStyle(color: Colors.grey),
-                                )),
-                          ],
-                        ),
-                         const SizedBox(height: 8.0,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              modelitems[index].askingPrice!= null ? modelitems[index].askingPrice.toString() : "Average price :${modelitems[index].averagePrice}M²" ,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              modelitems[index].livingArea != null ? '${modelitems[index].livingArea.toString()}M²' : "",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              modelitems[index].numberOfRooms != null ? '${modelitems[index].numberOfRooms.toString()}rooms' : "",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                         const SizedBox(height: 40.0,),
-                      ],
-                    ),
-                  );
+                                  item.streetAddress ??  item.area.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.0),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0,),
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    item.area != null ? item.municipality != null ?  '${item.area},${item.municipality}' : "Rating:${item.ratingFormatted}"  : "",
+                                    style: const TextStyle(color: Colors.grey),
+                                  )),
+                            ],
+                          ),
+                           const SizedBox(height: 8.0,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                item.askingPrice!= null ? item.askingPrice.toString() : "Average price :${item.averagePrice}M²" ,
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                item.livingArea != null ? '${item.livingArea.toString()}M²' : "",
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                item.numberOfRooms != null ? '${item.numberOfRooms.toString()}rooms' : "",
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                           const SizedBox(height: 5.0,),
+                        ],
+                      ),
+                    );
                 },
               ),
-            )
-          : Center(
-            child: Column(
-              children: [
-               
-                  Image.network("https://img.freepik.com/premium-vector/real-estate-home-business-logo-design-template_758228-41.jpg",width:double.maxFinite,),
-               
-                ElevatedButton(
-                    child: const Text("Open Now!"),
-                    onPressed: () {
-                      homeViewModel.readJson();
-                    },
-                  ),
-              ],
-            ),
-          ),
+            );
+          }
+        },
+      ),
+      
+      
     );
   }
 }
