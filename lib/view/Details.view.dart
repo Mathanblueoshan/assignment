@@ -1,6 +1,5 @@
-import 'dart:convert';
+import 'package:flutter_new_app/view_model/details.viewmodel.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
@@ -11,29 +10,13 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  dynamic details;
-
-//fetch the content from json Api
-
-  Future apiCall() async {
-    http.Response response;
-
-    response = await http.get(Uri.parse("https://pastebin.com/raw/uj6vtukE"));
-
-    debugPrint(response.body);
-    if (response.statusCode == 200) {
-      setState(() {
-        final apiResponse = json.decode(response.body);
-
-        details = apiResponse;
-      });
-    }
-  }
+  final DetailsViewModel _detailsViewModel =
+      DetailsViewModel(); //access the Detailsviewmodel
 
   @override
   void initState() {
     super.initState();
-    apiCall();
+    _detailsViewModel.apiCall();
   }
 
   @override
@@ -89,7 +72,7 @@ class _DetailPageState extends State<DetailPage> {
                       SizedBox(
                         height: 250.0,
                         child: Image.network(
-                          details["image"],
+                          _detailsViewModel.details["image"],
                           fit: BoxFit.cover,
                           width: double.maxFinite,
                         ),
@@ -102,7 +85,8 @@ class _DetailPageState extends State<DetailPage> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              details["streetAddress"].toString(),
+                              _detailsViewModel.details["streetAddress"]
+                                  .toString(),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 22.0),
                             ),
@@ -110,7 +94,9 @@ class _DetailPageState extends State<DetailPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                details["area"] + ',' + details["municipality"],
+                                _detailsViewModel.details["area"] +
+                                    ',' +
+                                    _detailsViewModel.details["municipality"],
                                 style: const TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -121,7 +107,7 @@ class _DetailPageState extends State<DetailPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                '${details["askingPrice"].toString()} SEK',
+                                '${_detailsViewModel.details["askingPrice"].toString()} SEK',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0),
@@ -134,7 +120,7 @@ class _DetailPageState extends State<DetailPage> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            details["description"].toString(),
+                            _detailsViewModel.details["description"].toString(),
                             style: const TextStyle(height: 2.0),
                           )),
                       const SizedBox(
@@ -147,7 +133,7 @@ class _DetailPageState extends State<DetailPage> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            details["livingArea"].toString(),
+                            _detailsViewModel.details["livingArea"].toString(),
                           )
                         ],
                       ),
@@ -161,7 +147,8 @@ class _DetailPageState extends State<DetailPage> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            details["numberOfRooms"].toString(),
+                            _detailsViewModel.details["numberOfRooms"]
+                                .toString(),
                           )
                         ],
                       ),
@@ -175,7 +162,7 @@ class _DetailPageState extends State<DetailPage> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            details["patio"].toString(),
+                            _detailsViewModel.details["patio"].toString(),
                           )
                         ],
                       ),
@@ -189,7 +176,8 @@ class _DetailPageState extends State<DetailPage> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            details["daysSincePublish"].toString(),
+                            _detailsViewModel.details["daysSincePublish"]
+                                .toString(),
                           )
                         ],
                       )
