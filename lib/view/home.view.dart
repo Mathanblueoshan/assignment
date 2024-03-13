@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   final HomeViewModel _homeViewModel = HomeViewModel(); //access the view model
 
   @override
@@ -85,6 +86,7 @@ class _HomePageState extends State<HomePage> {
                         item.type == "HighlightedProperty"
                             ? GestureDetector(
                                 onTap: () {
+                                  
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: ((context) =>
                                           const DetailPage())));
