@@ -12,7 +12,7 @@ class DetailsViewModel {
  List<Details> details = [];
 
    //fetch the content from json
-  Future<void> apiCall() async {
+  Future<void> fetchData() async {
     
     final String response = await rootBundle.loadString('assets/details.json');
    

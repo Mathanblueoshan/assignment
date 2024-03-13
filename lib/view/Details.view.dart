@@ -20,7 +20,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    _detailsViewModel.apiCall();
+    _detailsViewModel.fetchData();
   }
 
   @override
@@ -69,7 +69,7 @@ class _DetailPageState extends State<DetailPage> {
 // details_____________________________________
 
           body:FutureBuilder(
-        future: _detailsViewModel.apiCall(),
+        future: _detailsViewModel.fetchData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
@@ -83,127 +83,124 @@ class _DetailPageState extends State<DetailPage> {
                 itemBuilder: (context, index) {
                   Details details = _detailsViewModel.details[index];
 
-                  return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  child: Column(
+                  return Column(
                     children: [
                       SizedBox(
-                        height: 250.0,
-                        child: Image.network(
-                          details.image.toString(),
-                        
-                          fit: BoxFit.cover,
-                          width: double.maxFinite,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 250.0,
+                              child: Image.network(
+                                details.image.toString(),
+                              
+                                fit: BoxFit.cover,
+                                width: double.maxFinite,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                   details.streetAddress.toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold, fontSize: 22.0),
+                                  ),
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '${details.area},${details.municipality}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    )),
+                                const SizedBox(
+                                  height: 5.0,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '${details.askingPrice.toString()} SEK',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0),
+                                    )),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                   details.description.toString(),
+                                  style: const TextStyle(height: 2.0),
+                                )),
+                            const SizedBox(
+                              height: 30.0,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Living area:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                   details.livingArea.toString(),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5.0,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Number of rooms:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                   details.numberOfRooms.toString(),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5.0,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Patio:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                   details.patio.toString(),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5.0,
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Days since publish:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                   details.daysSincePublish.toString(),
+                                )
+                              ],
+                            )
+                          ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                             details.streetAddress.toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 22.0),
-                            ),
-                          ),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '${details.area},${details.municipality}',
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              )),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '${details.askingPrice.toString()} SEK',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
-                              )),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                             details.description.toString(),
-                            style: const TextStyle(height: 2.0),
-                          )),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Living area:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                             details.livingArea.toString(),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Number of rooms:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                             details.numberOfRooms.toString(),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Patio:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                             details.patio.toString(),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Days since publish:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                             details.daysSincePublish.toString(),
-                          )
-                        ],
-                      )
                     ],
-                  ),
-                ),
-              ],
-            ),
-          );
+                  );
                 },
               ),
             );
