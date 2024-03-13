@@ -1,25 +1,18 @@
-
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_new_app/model/detailsmodel.dart';
 
-
-
 class DetailsViewModel {
+  List<Details> details = [];
 
-
- List<Details> details = [];
-
-   //fetch the content from json
+  //fetch the content from json
   Future<void> fetchData() async {
-    
     final String response = await rootBundle.loadString('assets/details.json');
-   
+
     final List<dynamic> data = await json.decode(response);
 
     details = data.map((json) => Details.fromJson(json)).toList();
- 
   }
 }
 

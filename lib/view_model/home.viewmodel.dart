@@ -5,18 +5,15 @@ import 'package:flutter/services.dart';
 import '../model/homemodel.dart';
 
 class HomeViewModel {
+  List<Items> modelitems = [];
 
-
- List<Items> modelitems = [];
-
-   //fetch the content from json
+  //fetch the content from json
   Future<void> readJson() async {
-    
-    final String response = await rootBundle.loadString('assets/properties.json');
-   
+    final String response =
+        await rootBundle.loadString('assets/properties.json');
+
     final List<dynamic> data = await json.decode(response);
 
     modelitems = data.map((json) => Items.fromJson(json)).toList();
- 
   }
 }
