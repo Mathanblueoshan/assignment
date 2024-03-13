@@ -144,7 +144,7 @@ class _DetailPageState extends State<DetailPage> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  details.livingArea.toString(),
+                                 '${details.livingArea.toString()} m²',
                                 )
                               ],
                             ),

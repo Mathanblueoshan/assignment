@@ -149,13 +149,13 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               item.askingPrice != null
                                   ? item.askingPrice.toString()
-                                  : "Average price :${item.averagePrice}M²",
+                                  : "Average price :${item.averagePrice}m²",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               item.livingArea != null
-                                  ? '${item.livingArea.toString()}M²'
+                                  ? '${item.livingArea.toString()}m²'
                                   : "",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
