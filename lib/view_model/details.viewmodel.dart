@@ -8,6 +8,7 @@ class DetailsViewModel {
 //fetch the content from json Api
 
   Future apiCall() async {
+    
     http.Response response;
 
     response = await http.get(Uri.parse("https://pastebin.com/raw/uj6vtukE"));
