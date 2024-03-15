@@ -7,14 +7,7 @@ import '../model/homemodel.dart';
 class HomeViewModel {
 
  List<Items> modelItems = [];
-
-
-void init() {
  
- readJson();
-  
-}
-
    //fetch the content from json
    Future<void> readJson() async {
     
