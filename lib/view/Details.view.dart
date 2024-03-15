@@ -61,7 +61,7 @@ class _DetailPageState extends State<DetailPage> {
         future:_detailsViewModel.apiCall(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return const Center(child:  CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
