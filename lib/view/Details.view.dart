@@ -68,7 +68,7 @@ class _DetailPageState extends State<DetailPage> {
               children: [
                 SizedBox(
                   child: Column(
-                    children: [
+                    children: [           
                       SizedBox(
                         height: 250.0,
                         child: Image.network(

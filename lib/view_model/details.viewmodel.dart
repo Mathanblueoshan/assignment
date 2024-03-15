@@ -19,7 +19,7 @@ class DetailsViewModel {
 
       details = apiResponse;
 
-      debugPrint(details);
+      debugPrint(details["image"]);
     }
   }
 }

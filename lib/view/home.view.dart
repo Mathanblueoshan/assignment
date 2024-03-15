@@ -11,13 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   final HomeViewModel _homeViewModel = HomeViewModel(); //access the view model
 
-  @override
-  void initState() {
-    super.initState();
-    _homeViewModel.readJson();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +48,7 @@ class _HomePageState extends State<HomePage> {
       //______________________________________________________LISTVIEW____________________________________________________________________
 
       body: FutureBuilder(
-        future: _homeViewModel.readJson(),
+        future:_homeViewModel.readJson(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
@@ -62,9 +58,9 @@ class _HomePageState extends State<HomePage> {
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: ListView.builder(
-                itemCount: _homeViewModel.modelitems.length,
+                itemCount: _homeViewModel.modelItems.length,
                 itemBuilder: (context, index) {
-                  Items item = _homeViewModel.modelitems[index];
+                  Items item = _homeViewModel.modelItems[index];
 
                   return SizedBox(
                     child: Column(
